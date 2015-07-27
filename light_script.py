@@ -9,7 +9,11 @@ import json
 def sendRequest(lightNumber,data):
 	headers = {'Content-type': 'application/json'}
 	r = requests.put("http://192.168.1.65/api/1fd93c561b633f071344f0ba3de5301b/lights/"+str(lightNumber)+"/state", data=json.dumps(data), headers=headers)
-	print r.content	
+	print r.content
+
+def getLights():
+	r = requests.get("http://192.168.1.65/api/1fd93c561b633f071344f0ba3de5301b/lights/")
+        print r.content	
 
 flagPairs = flags.getFlags()
 requestjson = {}
@@ -31,6 +35,8 @@ for flagPair in flagPairs:
 		requestjson["hue"]=int(args[0])
 	elif flag == "-l":
 		lights=args
-print requestjson
+	elif flag == "--status":
+		getLights()
+
 for lightNumber in lights:
 	sendRequest(lightNumber,requestjson)

@@ -9,7 +9,6 @@ def isFlag(arg):
 def getFlags():
 	cmdargs = eval(str(sys.argv))
 	
-	print cmdargs
 	flagPair={}
 	flagPairs=[]
 	for arg in cmdargs:	
