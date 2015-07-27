@@ -19,9 +19,9 @@ for flagPair in flagPairs:
 	flag = flagPair["flag"]
 	args = flagPair["args"]
 	
-	if flag == "-on":
+	if flag == "--on":
 		requestjson["on"]=True
-	elif flag == "-off":
+	elif flag == "--off":
 		requestjson["on"]=False
 	elif flag == "-b":
 		requestjson["bri"]=int(args[0])
