@@ -13,7 +13,12 @@ def sendRequest(lightNumber,data):
 
 def getLights():
 	r = requests.get("http://192.168.1.65/api/1fd93c561b633f071344f0ba3de5301b/lights/")
-        print r.content	
+	return r.content
+
+def getStatus():
+	j = json.loads(getLights())
+	for key in j.keys():
+		print j[key]["state"]
 
 flagPairs = flags.getFlags()
 requestjson = {}
@@ -36,7 +41,8 @@ for flagPair in flagPairs:
 	elif flag == "-l":
 		lights=args
 	elif flag == "--status":
-		getLights()
+		getStatus()
 
 for lightNumber in lights:
-	sendRequest(lightNumber,requestjson)
+	if requestjson:
+		sendRequest(lightNumber,requestjson)
