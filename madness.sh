@@ -2,7 +2,6 @@
 
 lights='python /Users/alexbrown/Zakk/HueScripts/light_script.py'
 
-echo "Let the madness begin!"
 $lights --on
 
 n=1
@@ -12,3 +11,4 @@ do
     echo "flash $n"
     let n+=1
 done
+$lights --off
