@@ -39,11 +39,11 @@ for flagPair in flagPairs:
 		if len(args)!=0:
 			lights=args
 		for light in lights:
-			sendRequest(light, colours.randomColour())
+			sendColorRequest(light, colours.randomColour())
 	elif flag in "--colour":
 		requestjson.update(colours.getColour(args[0]))
 	elif flag in "--script":
-		scripts.playCircle()
+		scripts.playChangingCircle()
 	if flag in simpleCommands and len(args)!=0:
 		lights=args
 	
