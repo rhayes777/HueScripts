@@ -3,8 +3,10 @@
 import sys
 import re
 
+keywords = ["on","off","switch","colour","status","random","script"]
+
 def isFlag(arg):
-	return arg.startswith("-")
+	return arg.startswith("-") or arg in keywords
 
 def getFlags():
 	cmdargs = eval(str(sys.argv))

@@ -11,38 +11,38 @@ from bridge_request import *
 flagPairs = flags.getFlags()
 lights = [3,4,5]
 requestjson={}
-simpleCommands = ["--on","--off","--switch", "--collor"]
+simpleCommands = ["--on","--off","--switch", "--colour"]
 
 for flagPair in flagPairs:
 	flag = flagPair["flag"]
 	args = flagPair["args"]
 	
-	if flag == "--on":
+	if flag in "--on":
 		requestjson["on"]=True
-	elif flag == "--off":
+	elif flag in "--off":
 		requestjson["on"]=False
-	elif flag == "-b":
+	elif flag in "-b":
 		requestjson["bri"]=int(args[0])
-	elif flag == "-s":
+	elif flag in "-s":
 		requestjson["sat"]=int(args[0])
-	elif flag == "-h":
+	elif flag in "-h":
 		requestjson["hue"]=int(args[0])
-	elif flag == "-l":
+	elif flag in "-l":
 		lights=args
-	elif flag == "--status":
+	elif flag in "--status":
 		statusDict = getStatus(args)
 		for key in statusDict.keys():
 			print statusDict[key]
-	elif flag == "--switch":
+	elif flag in "--switch":
 		requestjson["on"] = not isAllOn()
-	elif flag == "--random":
+	elif flag in "--random":
 		if len(args)!=0:
 			lights=args
 		for light in lights:
 			sendRequest(light, colours.randomColour())
-	elif flag == "--colour":
+	elif flag in "--colour":
 		requestjson.update(colours.getColour(args[0]))
-	elif flag == "--script":
+	elif flag in "--script":
 		scripts.playCircle()
 	if flag in simpleCommands and len(args)!=0:
 		lights=args

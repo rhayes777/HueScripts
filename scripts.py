@@ -14,12 +14,20 @@ def playScript(lightActions):
 def playCircle():
 	lightNumbers, colourList = getLightsAndColours()
 	playScript([partial(circleAction,lightNumbers=lightNumbers,colourList=colourList)])
+	
+def playTwo():
+	lightNumbers, colourList = getLightsAndColours()
+	playScript([partial(circleAction,lightNumbers=lightNumbers,colourList=colourList),partial(flashAction,lightNumbers=[4])])
+
 
 def circleAction(lightNumbers, colourList, t):
 	for lightNumber in lightNumbers:
 		timeStep = int(lightNumber) + t
 		index = timeStep % len(colourList)
 		bridge_request.sendColorRequest(lightNumber, colourList[index])
+		
+def flashAction(lightNumbers, t):
+	bridge_request.setOn(t%2==0, lightNumbers)
 	
 def getLightsAndColours():
 	lightNumbers = bridge_request.getLightNumbers()
@@ -40,7 +48,7 @@ class Script:
 		while run:
 			for lightAction in self.lightActions:
 				lightAction(t=self.t)
-				self.t += 1
-				time.sleep(self.pauseTime)
+			self.t += 1
+			time.sleep(self.pauseTime)
 				
 		

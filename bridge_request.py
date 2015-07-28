@@ -41,6 +41,11 @@ def turnOff(lightNumbers=[]):
 		lightNumbers = getLightNumbers()
 	sendRequests(lightNumbers,{"on":False})
 	
+def setOn(isOn, lightNumbers=[]):
+	if not lightNumbers:
+		lightNumbers = getLightNumbers()
+	sendRequests(lightNumbers,{"on":isOn})
+	
 def getLightCount():
 	j = json.loads(getLights())
 	statusDict = {}
