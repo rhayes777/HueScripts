@@ -8,21 +8,47 @@ import json
 
 def sendRequest(lightNumber,data):
 	headers = {'Content-type': 'application/json'}
-	r = requests.put("http://192.168.1.65/api/1fd93c561b633f071344f0ba3de5301b/lights/"+str(lightNumber)+"/state", data=json.dumps(data), headers=headers)
+	r = requests.put("http://192.168.1.64/api/1fd93c561b633f071344f0ba3de5301b/lights/"+str(lightNumber)+"/state", data=json.dumps(data), headers=headers)
 	print r.content
 
 def getLights():
-	r = requests.get("http://192.168.1.65/api/1fd93c561b633f071344f0ba3de5301b/lights/")
+	r = requests.get("http://192.168.1.64/api/1fd93c561b633f071344f0ba3de5301b/lights/")
 	return r.content
 
 def getStatus():
 	j = json.loads(getLights())
+	statusArray = []
 	for key in j.keys():
-		print j[key]["state"]
+		status = j[key]["state"]
+		status["lightNumber"]=key
+		statusArray.append(status)
+	return statusArray
+
+def isLightOn():
+	for status in getStatus():
+		if status["on"]:
+			return True
+	return False
+
+def performSwitch(arg):
+	requestjson={}
+	if arg == "r":
+		for status in getStatus():
+			requestjson["on"]= not status["on"]
+			requestjson["bri"] = status["bri"]
+			requestjson["sat"] = status["sat"]
+			requestjson["hue"] = status["hue"]
+			lightNumber=status["lightNumber"]
+			del status["lightNumber"]
+			sendRequest(lightNumber, requestjson)
+		requestjson={}	
+	elif arg == "e":
+		requestjson["on"]= not isLightOn()
+	requestjson
 
 flagPairs = flags.getFlags()
-requestjson = {}
 lights = [3,4,5]
+requestjson={}
 
 for flagPair in flagPairs:
 	flag = flagPair["flag"]
@@ -41,8 +67,12 @@ for flagPair in flagPairs:
 	elif flag == "-l":
 		lights=args
 	elif flag == "--status":
-		getStatus()
-
+		for status in getStatus():
+			print status
+	elif flag == "--switch":
+		requestjson = performSwitch(args[0])
+print lights
+print requestjson
 for lightNumber in lights:
 	if requestjson:
 		sendRequest(lightNumber,requestjson)
