@@ -8,6 +8,10 @@ isLogging = False
 def log(message):
 	if isLogging:
 		print "bridge_request: " + str(message)
+		
+def sendColorRequest(lightNumber, colour):
+	colour["on"]=[True]
+	sendRequest(lightNumber, colour)
 
 def sendRequest(lightNumber,data):
 	print lightNumber
