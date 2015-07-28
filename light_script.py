@@ -4,12 +4,13 @@ import sys
 import flags
 import requests
 import json
+import colours
 from bridge_request import *
 
 flagPairs = flags.getFlags()
 lights = [3,4,5]
 requestjson={}
-simpleCommands = ["--on","--off","--switch"]
+simpleCommands = ["--on","--off","--switch", "--collor"]
 
 for flagPair in flagPairs:
 	flag = flagPair["flag"]
@@ -33,6 +34,13 @@ for flagPair in flagPairs:
 			print statusDict[key]
 	elif flag == "--switch":
 		requestjson["on"] = not isAllOn()
+	elif flag == "--random":
+		if len(args)!=0:
+			lights=args
+		for light in lights:
+			sendRequest(light, colours.randomColour())
+	elif flag == "--colour":
+		requestjson.update(colours.getColour(args[0]))
 		
 	if flag in simpleCommands and len(args)!=0:
 		lights=args
