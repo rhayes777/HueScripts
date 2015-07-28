@@ -1,5 +1,5 @@
 #!/bin/bash
-
+$1=
 lights='python /Users/alexbrown/Zakk/HueScripts/light_script.py'
 
 $lights --on

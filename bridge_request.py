@@ -13,6 +13,8 @@ def sendColorRequest(lightNumber, colour):
 	colour["on"]=[True]
 	sendRequest(lightNumber, colour)
 
+# lightNumber - integer key for light (3,4,5)
+# data = anyof{"on":True,"bri":255,"sat":255,"hue":65000 or something like that } 
 def sendRequest(lightNumber,data):
 	print lightNumber
 	print data
