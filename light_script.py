@@ -5,6 +5,7 @@ import flags
 import requests
 import json
 import colours
+import scripts
 from bridge_request import *
 
 flagPairs = flags.getFlags()
@@ -41,7 +42,8 @@ for flagPair in flagPairs:
 			sendRequest(light, colours.randomColour())
 	elif flag == "--colour":
 		requestjson.update(colours.getColour(args[0]))
-		
+	elif flag == "--script":
+		scripts.playCircle()
 	if flag in simpleCommands and len(args)!=0:
 		lights=args
 	
