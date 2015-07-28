@@ -43,8 +43,10 @@ def performSwitch(arg):
 			sendRequest(lightNumber, requestjson)
 		requestjson={}	
 	elif arg == "e":
+		print "arg == e"
 		requestjson["on"]= not isLightOn()
-	requestjson
+	print requestjson
+	return requestjson
 
 flagPairs = flags.getFlags()
 lights = [3,4,5]
