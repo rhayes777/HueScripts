@@ -61,8 +61,12 @@ for flagPair in flagPairs:
 	
 	if flag == "--on":
 		requestjson["on"]=True
+		if len(args)!=0:
+			lights=args
 	elif flag == "--off":
 		requestjson["on"]=False
+		if len(args)!=0:
+			lights=lights=args
 	elif flag == "-b":
 		requestjson["bri"]=int(args[0])
 	elif flag == "-s":
