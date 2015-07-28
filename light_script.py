@@ -15,13 +15,18 @@ def getLights():
 	r = requests.get("http://192.168.1.64/api/1fd93c561b633f071344f0ba3de5301b/lights/")
 	return r.content
 
-def getStatus():
+def getStatus(lightNumbers=[]):
 	j = json.loads(getLights())
 	statusArray = []
 	for key in j.keys():
 		status = j[key]["state"]
 		status["lightNumber"]=key
-		statusArray.append(status)
+		if not lightNumbers:
+			statusArray.append(status)
+		elif key in lightNumbers:
+			statusArray.append(status)
+		print key
+	
 	return statusArray
 
 def isLightOn():
@@ -43,9 +48,7 @@ def performSwitch(arg):
 			sendRequest(lightNumber, requestjson)
 		requestjson={}	
 	elif arg == "e":
-		print "arg == e"
 		requestjson["on"]= not isLightOn()
-	print requestjson
 	return requestjson
 
 flagPairs = flags.getFlags()
@@ -69,12 +72,11 @@ for flagPair in flagPairs:
 	elif flag == "-l":
 		lights=args
 	elif flag == "--status":
-		for status in getStatus():
+		for status in getStatus(args):
 			print status
 	elif flag == "--switch":
 		requestjson = performSwitch(args[0])
-print lights
-print requestjson
+
 for lightNumber in lights:
 	if requestjson:
 		sendRequest(lightNumber,requestjson)
