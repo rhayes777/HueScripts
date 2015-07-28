@@ -15,16 +15,10 @@ for flagPair in flagPairs:
 	flag = flagPair["flag"]
 	args = flagPair["args"]
 	
-	def checkArgs():
-		if len(args)!=0:
-			lights=args
-	
 	if flag == "--on":
 		requestjson["on"]=True
-		checkArgs()
 	elif flag == "--off":
 		requestjson["on"]=False
-		checkArgs()
 	elif flag == "-b":
 		requestjson["bri"]=int(args[0])
 	elif flag == "-s":
@@ -39,7 +33,6 @@ for flagPair in flagPairs:
 			print statusDict[key]
 	elif flag == "--switch":
 		requestjson["on"] = not isAllOn()
-		checkArgs()
 		
 	if flag in simpleCommands and len(args)!=0:
 		lights=args

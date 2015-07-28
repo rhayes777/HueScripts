@@ -23,7 +23,6 @@ def getStatus(lightNumbers=[]):
 		status = j[key]["state"]
 		if not lightNumbers or key in lightNumbers:
 			statusDict[key]=status
-	
 	return statusDict
 
 def isLightOn(lightNumbers=[]):
