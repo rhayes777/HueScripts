@@ -11,7 +11,7 @@ from bridge_request import *
 flagPairs = flags.getFlags()
 lights = [3,4,5]
 requestjson={}
-simpleCommands = ["--on","--off","--switch", "--colour"]
+simpleCommands = ["--on","--off","--switch", "--colour", "red", "yellow", "orange", "green", "blue"]
 
 for flagPair in flagPairs:
 	flag = flagPair["flag"]
@@ -54,6 +54,16 @@ for flagPair in flagPairs:
 		scripts.playFire()
 	elif flag in "--disco":
 		scripts.playDisco()
+	elif flag == "red":
+		requestjson=colours.getColour("red")
+	elif flag == "yellow":
+		requestjson=colours.getColour("yellow")
+	elif flag == "green":
+		requestjson=colours.getColour("green")
+	elif flag == "blue":
+		requestjson=colours.getColour("blue")
+	elif flag == "orange":
+		requestjson=colours.getColour("orange")
 	if flag in simpleCommands and len(args)!=0:
 		lights=args
 	
