@@ -7,9 +7,9 @@ from functools import partial
 
 run = False
 
-def playScript(lightActions):
+def playScript(lightActions, pauseTime = 1):
 	bridge_request.turnOn()
-	script = Script(lightActions, 0)
+	script = Script(lightActions, pauseTime)
 	script.run()
 	
 def playPremadeScript(scriptNumber):
@@ -27,11 +27,11 @@ def playPremadeScript(scriptNumber):
 		
 def playFire():
 	lightNumbers, colourList = getLightsAndColours()
-	playScript([partial(randomInRangeAction,lightNumbers,colourList),partial(flashAction,lightNumbers)])
+	playScript([partial(randomInRangeAction,lightNumbers),partial(flashAction,lightNumbers)],0)
 		
 def playStrobe():
 	lightNumbers, colourList = getLightsAndColours()
-	playScript([partial(flashAction,lightNumbers)])
+	playScript([partial(flashAction,lightNumbers)],0.5)
 	
 def playChangingCircle():
 	lightNumbers, colourList = getLightsAndColours()
@@ -56,16 +56,15 @@ def changingCircleAction(lightNumbers, colourList, t):
 	colourList[t%len(colourList)] = colours.randomColour()
 	circleAction(lightNumbers, colourList, t)
 	
-def randomInRangeAction(lightNumbers, colourList, t, min=0, max=65535):
-	for n in range(0, len(colourList)):
-		print n
-		colourList[n]=colours.randomColourInRange(min, max)
+def randomInRangeAction(lightNumbers, t, min=0, max=65535):
+	for lightNumber in lightNumbers:
+		bridge_request.sendRequest(lightNumber, colours.randomColourInRange(min, max))
 		
 def flashAction(lightNumbers, t):
-	bridge_request.setOn(True, lightNumbers)
-	time.sleep(0.2)
 	bridge_request.setOn(False, lightNumbers)
 	time.sleep(0.4)
+	bridge_request.setOn(True, lightNumbers)
+	time.sleep(0.2)
 	
 def getLightsAndColours():
 	lightNumbers = bridge_request.getLightNumbers()

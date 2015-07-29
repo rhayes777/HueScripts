@@ -44,6 +44,14 @@ for flagPair in flagPairs:
 		requestjson.update(colours.getColour(args[0]))
 	elif flag in "--script":
 		scripts.playPremadeScript(args[0])
+	elif flag in "--circle":
+		scripts.playCircle()
+	elif flag in "--ccircle":
+		scripts.playChangingCircle()
+	elif flag in "--strobe":
+		scripts.playStrobe()
+	elif flag in "--fire":
+		scripts.playFire()
 	if flag in simpleCommands and len(args)!=0:
 		lights=args
 	
