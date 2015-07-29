@@ -3,6 +3,7 @@
 import colours
 import bridge_request
 import time
+from inspect import getargspec
 from functools import partial
 
 run = False
@@ -11,6 +12,18 @@ def playScript(lightActions, pauseTime = 1):
 	bridge_request.turnOn()
 	script = Script(lightActions, pauseTime)
 	script.run()
+	
+def playScriptForFunctions(functions, pauseTime = 1):
+	lightNumbers, colourList = getLightsAndColours()
+	lightActions = []
+	for function in functions:
+		argNames = getargspec(function)[0]
+		if "lightNumbers" in argNames:
+			function = partial(function, lightNumbers=lightNumbers)
+		if "colourList" in argNames:
+			function = partial(function, colourList=colourList)
+		lightActions.append(function)
+	playScript(lightActions, pauseTime)
 	
 def playPremadeScript(scriptNumber):
 	print scriptNumber
@@ -26,25 +39,19 @@ def playPremadeScript(scriptNumber):
 		playFire()
 		
 def playFire():
-	lightNumbers, colourList = getLightsAndColours()
-	playScript([partial(randomInRangeAction,lightNumbers),partial(flashAction,lightNumbers)],0)
+	playScriptForFunctions([randomInRangeAction,flashAction],0)
 		
 def playStrobe():
-	lightNumbers, colourList = getLightsAndColours()
-	playScript([partial(flashAction,lightNumbers)],0.5)
+	playScriptForFunctions([flashAction],0.5)
 	
 def playChangingCircle():
-	lightNumbers, colourList = getLightsAndColours()
-	playScript([partial(changingCircleAction,lightNumbers=lightNumbers,colourList=colourList)])
+	playScriptForFunctions([changingCircleAction])
 	
 def playCircle():
-	lightNumbers, colourList = getLightsAndColours()
-	playScript([partial(circleAction,lightNumbers=lightNumbers,colourList=colourList)])
+	playScriptForFunctions([circleAction])
 	
 def playTwo():
-	lightNumbers, colourList = getLightsAndColours()
-	playScript([partial(circleAction,lightNumbers=lightNumbers,colourList=colourList),partial(flashAction,lightNumbers=[4])])
-
+	playScriptForFunctions([circleAction,flashAction])
 
 def circleAction(lightNumbers, colourList, t):
 	for lightNumber in lightNumbers:
