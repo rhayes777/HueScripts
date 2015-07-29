@@ -3,7 +3,7 @@
 import sys
 import re
 
-keywords = ["on","off","switch","colour","status","random","script","circle","ccircle","strobe","fire"]
+keywords = ["on","off","switch","colour","status","random","script","circle","ccircle","strobe","fire","disco"]
 
 def isFlag(arg):
 	return arg.startswith("-") or arg in keywords

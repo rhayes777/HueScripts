@@ -52,6 +52,9 @@ def playCircle():
 	
 def playTwo():
 	playScriptForFunctions([circleAction,flashAction])
+	
+def playDisco():
+	playScriptForFunctions([randomInRangeAction], 0.6)
 
 def circleAction(lightNumbers, colourList, t):
 	for lightNumber in lightNumbers:

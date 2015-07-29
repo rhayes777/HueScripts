@@ -52,6 +52,8 @@ for flagPair in flagPairs:
 		scripts.playStrobe()
 	elif flag in "--fire":
 		scripts.playFire()
+	elif flag in "--disco":
+		scripts.playDisco()
 	if flag in simpleCommands and len(args)!=0:
 		lights=args
 	
