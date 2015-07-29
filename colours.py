@@ -1,21 +1,38 @@
 #!/usr/local/bin/python
 from random import randint
+import colorsys 
 
 colourGap = 10923
+HUE_MAX = 65535
+BRI_MAX = 255
+SAT_MAX = BRI_MAX
+HUE_MIN = 0
+
+def colourForHBS(hue, brightness, saturation):
+	return {"bri":brightness,"sat":saturation,"hue":hue}
+	
+def colourForRGB(red, green, blue):
+	hue, brightness, saturation = colorsys.rgb_to_hls(red, green, blue)
+	return colourForHBS(int(hue * HUE_MAX), int(brightness * BRI_MAX), int(saturation * SAT_MAX))
 
 def randomColour():
-	return {"bri":randint(0,255),"sat":randint(0,255),"hue":randint(0,65535)}
+	return colourForHBS(randint(0,HUE_MAX), randint(0,BRI_MAX), randint(0,SAT_MAX))
 
-def colorForHue(hue):
-	return {"bri":255,"sat":255,"hue":hue}
+def colourForHue(hue):
+	return colourForHBS(hue, 255, 255)
 	
-colorDict = {"red":colorForHue(0),"orange":colorForHue(int(colourGap/2)),"yellow":colorForHue(colourGap), "green":colorForHue(2*colourGap)}
+colourDict = {"red":colourForRGB(1, 0, 0),"orange":colourForRGB(0.5, 1, 1),"yellow":colourForRGB(0, 1, 1), "green":colourForRGB(0, 1, 0), "blue":colourForRGB(0, 0, 1)}
 	
 def getColour(name):
-	return colorDict[name]
+	return colourDict[name]
+	
+def getHue(name):
+	return getColour(name)["hue"]
 	
 def randomColourInRange(min, max):
-	return colorForHue(randint(min, max))
+	return colourForHue(randint(min, max))
+	
+
 	
 
 

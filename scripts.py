@@ -13,7 +13,7 @@ def playScript(lightActions, pauseTime = 1):
 	script = Script(lightActions, pauseTime)
 	script.run()
 	
-def playScriptForFunctions(functions, pauseTime = 1):
+def playScriptForFunctions(functions, pauseTime = 1, minHue = colours.HUE_MIN, maxHue = colours.HUE_MAX):
 	lightNumbers, colourList = getLightsAndColours()
 	lightActions = []
 	for function in functions:
@@ -22,6 +22,11 @@ def playScriptForFunctions(functions, pauseTime = 1):
 			function = partial(function, lightNumbers=lightNumbers)
 		if "colourList" in argNames:
 			function = partial(function, colourList=colourList)
+		if "minHue" in argNames:
+			function = partial(function, minHue=colours.getHue(minHue))
+		if "maxHue" in argNames:
+			function = partial(function, maxHue=colours.getHue(maxHue))
+		
 		lightActions.append(function)
 	playScript(lightActions, pauseTime)
 	
@@ -39,10 +44,10 @@ def playPremadeScript(scriptNumber):
 		playFire()
 		
 def playFire():
-	playScriptForFunctions([randomInRangeAction,flashAction],0)
+	playScriptForFunctions([randomInRangeAction,flashAction],pauseTime=0,minHue=colours.getHue("red"),maxHue=colours.getHue("yellow"))
 		
 def playStrobe():
-	playScriptForFunctions([flashAction],0.5)
+	playScriptForFunctions([flashAction],pauseTime=0.5)
 	
 def playChangingCircle():
 	playScriptForFunctions([changingCircleAction])
@@ -54,7 +59,7 @@ def playTwo():
 	playScriptForFunctions([circleAction,flashAction])
 	
 def playDisco():
-	playScriptForFunctions([randomInRangeAction], 0.6)
+	playScriptForFunctions([randomInRangeAction], pauseTime=0.6)
 
 def circleAction(lightNumbers, colourList, t):
 	for lightNumber in lightNumbers:
