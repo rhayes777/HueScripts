@@ -10,7 +10,7 @@ def log(message):
 		print "bridge_request: " + str(message)
 		
 def sendColorRequest(lightNumber, colour):
-	colour["on"]=[True]
+	colour["on"]=True
 	sendRequest(lightNumber, colour)
 
 # lightNumber - integer key for light (3,4,5)
