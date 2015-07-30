@@ -5,6 +5,7 @@ import bridge_request
 import time
 from inspect import getargspec
 from functools import partial
+from random import randint
 
 run = False
 
@@ -13,8 +14,15 @@ def playScript(lightActions, pauseTime = 1):
 	script = Script(lightActions, pauseTime)
 	script.run()
 	
-def playScriptForFunctions(functions, pauseTime = 1, minHue = colours.HUE_MIN, maxHue = colours.HUE_MAX):
-	lightNumbers, colourList = getLightsAndColours()
+def playScriptForFunctions(functions, pauseTime = 1, minHue = colours.HUE_MIN, maxHue = colours.HUE_MAX, lightNumbers=[], colourList=[]):
+	print "COLOURLIST"
+	print colourList
+	lightNumbers2, colourList2 = getLightsAndColours()
+	if not lightNumbers:
+		lightNumbers = lightNumbers2
+	if not colourList:
+		colourList = colourList2
+	print colourList
 	lightActions = []
 	for function in functions:
 		argNames = getargspec(function)[0]
@@ -23,9 +31,9 @@ def playScriptForFunctions(functions, pauseTime = 1, minHue = colours.HUE_MIN, m
 		if "colourList" in argNames:
 			function = partial(function, colourList=colourList)
 		if "minHue" in argNames:
-			function = partial(function, minHue=colours.getHue(minHue))
+			function = partial(function, minHue=minHue)
 		if "maxHue" in argNames:
-			function = partial(function, maxHue=colours.getHue(maxHue))
+			function = partial(function, maxHue=maxHue)
 		
 		lightActions.append(function)
 	playScript(lightActions, pauseTime)
@@ -44,7 +52,7 @@ def playPremadeScript(scriptNumber):
 		playFire()
 		
 def playFire():
-	playScriptForFunctions([randomInRangeAction,flashAction],pauseTime=0,minHue=colours.getHue("red"),maxHue=colours.getHue("yellow"))
+	playScriptForFunctions([randomInRangeAction,flashAction],pauseTime=0,minHue=500,maxHue=16000)
 		
 def playStrobe():
 	playScriptForFunctions([flashAction],pauseTime=0.5)
@@ -71,15 +79,25 @@ def changingCircleAction(lightNumbers, colourList, t):
 	colourList[t%len(colourList)] = colours.randomColour()
 	circleAction(lightNumbers, colourList, t)
 	
-def randomInRangeAction(lightNumbers, t, min=0, max=65535):
+def randomInRangeAction(lightNumbers, t, minHue=0, maxHue=65535):
 	for lightNumber in lightNumbers:
-		bridge_request.sendRequest(lightNumber, colours.randomColourInRange(min, max))
+		bridge_request.sendRequest(lightNumber, colours.randomColourInRange(minHue, maxHue))
+		
+def randomInSet(lightNumbers, colourList, t):
+	for lightNumber in lightNumbers:
+		bridge_request.sendRequest(lightNumber, colourList[randint(0, len(colourList)-1)])
 		
 def flashAction(lightNumbers, t):
 	bridge_request.setOn(False, lightNumbers)
 	time.sleep(0.4)
 	bridge_request.setOn(True, lightNumbers)
 	time.sleep(0.2)
+	
+def randomFlashAction(lightNumbers, t):
+	bridge_request.setOn(False, lightNumbers)
+	time.sleep(0.4*randint(10)/10)
+	bridge_request.setOn(True, lightNumbers)
+	time.sleep(0.2*randint(10)/10)
 	
 def getLightsAndColours():
 	lightNumbers = bridge_request.getLightNumbers()
