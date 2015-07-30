@@ -68,6 +68,16 @@ def playTwo():
 	
 def playDisco():
 	playScriptForFunctions([randomInRangeAction], pauseTime=0.6)
+	
+def playPolice():
+	playScriptForFunctions([policeLightsAction], pauseTime=0.7)
+	
+def policeLightsAction(t):
+	isFirstRed = t % 2 == 0
+	firstColour = colours.getColour("red") if isFirstRed else colours.getColour("blue")
+	secondColour = colours.getColour("blue") if isFirstRed else colours.getColour("red") 
+	bridge_request.sendColourRequests([3, 4], firstColour)
+	bridge_request.sendColourRequests([5], secondColour)
 
 def circleAction(lightNumbers, colourList, t):
 	for lightNumber in lightNumbers:

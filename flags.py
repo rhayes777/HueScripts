@@ -4,7 +4,7 @@ import sys
 import re
 from colours import colourDict
 
-keywords = ["on","off","switch","colour","status","random","script","circle","ccircle","strobe","fire","disco"]
+keywords = ["on","off","switch","colour","status","random","script","circle","ccircle","strobe","fire","disco","police"]
 keywords.extend(colourDict.keys())
 print "keywords"
 

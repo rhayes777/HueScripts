@@ -55,6 +55,8 @@ for flagPair in flagPairs:
 		scripts.playFire()
 	elif flag in "--disco":
 		scripts.playDisco()
+	elif flag == "police":
+		scripts.playPolice()
 	elif flag == "red":
 		requestjson=colours.getColour("red")
 	elif flag == "yellow":

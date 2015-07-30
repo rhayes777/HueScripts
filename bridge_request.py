@@ -9,6 +9,10 @@ def log(message):
 	if isLogging:
 		print "bridge_request: " + str(message)
 		
+def sendColourRequests(lightNumbers, colour):
+	for lightNumber in lightNumbers:
+		sendColorRequest(lightNumber, colour)
+		
 def sendColorRequest(lightNumber, colour):
 	colour["on"]=True
 	sendRequest(lightNumber, colour)
