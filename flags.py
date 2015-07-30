@@ -2,10 +2,14 @@
 
 import sys
 import re
+from colours import colourDict
 
-keywords = ["on","off","switch","colour","status","random","script","circle","ccircle","strobe","fire","disco","red","yellow","green","blue","orange"]
+keywords = ["on","off","switch","colour","status","random","script","circle","ccircle","strobe","fire","disco"]
+keywords.extend(colourDict.keys())
+print "keywords"
 
 def isFlag(arg):
+	print keywords
 	return arg.startswith("-") or arg in keywords
 
 def getFlags():
