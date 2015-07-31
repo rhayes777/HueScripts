@@ -2,7 +2,6 @@
 from random import randint
 import colorsys 
 
-colourGap = 10923
 HUE_MAX = 65535
 BRI_MAX = 255
 SAT_MAX = BRI_MAX
@@ -20,8 +19,11 @@ def randomColour():
 
 def colourForHue(hue):
 	return colourForHBS(hue, 255, 255)
+
+def colourForHueDegrees(hueDegrees):
+	return colourForHue(HUE_MAX*hueDegrees/360)
 	
-colourDict = {"red":colourForRGB(1, 0, 0),"orange":colourForRGB(0.5, 1, 1),"yellow":colourForRGB(0, 1, 1), "green":colourForRGB(0, 1, 0), "blue":colourForRGB(0, 0, 1)}
+colourDict = {"red":colourForHueDegrees(0),"orange":colourForHueDegrees(40),"yellow":colourForHueDegrees(80),"sky":colourForHueDegrees(200),"purple":colourForHueDegrees(280),"pink":colourForHueDegrees(300), "green":colourForHueDegrees(130), "blue":colourForHueDegrees(240),"turquoise":colourForHueDegrees(180),"red2":colourForHueDegrees(360)}
 	
 def getColour(name):
 	return colourDict[name]

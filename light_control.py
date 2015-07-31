@@ -57,17 +57,8 @@ for flagPair in flagPairs:
 		scripts.playDisco()
 	elif flag == "police":
 		scripts.playPolice()
-	elif flag == "red":
-		requestjson=colours.getColour("red")
-	elif flag == "yellow":
-		requestjson=colours.getColour("yellow")
-	elif flag == "green":
-		print "green found"
-		requestjson=colours.getColour("green")
-	elif flag == "blue":
-		requestjson=colours.getColour("blue")
-	elif flag == "orange":
-		requestjson=colours.getColour("orange")
+	elif flag in colours.colourDict:
+		requestjson = colours.getColour(flag)
 	if flag in simpleCommands and len(args)!=0:
 		lights=args
 	
