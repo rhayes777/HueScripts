@@ -1,17 +1,20 @@
 #!/usr/local/bin/python
 
 import sys
-import flags
+from flags import *
 import requests
 import json
 import colours
 import scripts
 from bridge_request import *
+import ooscripts
 
-flagPairs = flags.getFlags()
+flagPairs = getFlags()
+singleFlags = []
+for flagPair in flagPairs:
+	singleFlags.append(flagPair["flag"])
 lights = [3,4,5]
 requestjson={}
-simpleCommands = ["on","off","switch", "colour"]
 simpleCommands.extend(colours.colourDict.keys())
 
 for flagPair in flagPairs:
@@ -55,11 +58,13 @@ for flagPair in flagPairs:
 		scripts.playFire()
 	elif flag == "disco":
 		scripts.playDisco()
-	elif flag == "police":
-		scripts.playPolice()
+# 	elif flag == "police":
+# 		scripts.playPolice()
 	elif flag == "help":
-		for keyword in flags.keywords:
+		for keyword in keywords:
 			print keyword
+	elif flag in ooscripts.lightActions:
+			ooscripts.playScriptForNames(list(set(ooscripts.lightActions).intersection(singleFlags)))
 	elif flag in colours.colourDict:
 		requestjson = colours.getColour(flag)
 	if flag in simpleCommands and len(args)!=0:

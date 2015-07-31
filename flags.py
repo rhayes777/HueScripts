@@ -3,9 +3,13 @@
 import sys
 import re
 from colours import colourDict
+from ooscripts import lightActions
 
-keywords = ["on","off","switch","colour","status","random","script","circle","ccircle","strobe","fire","disco","police","help"]
-keywords.extend(colourDict.keys())
+simpleCommands = ["on","off","switch", "colour"]
+keywords = ["status","random","script","circle","ccircle","strobe","fire","disco","police","help"]
+simpleCommands.extend(colourDict.keys())
+keywords.extend(simpleCommands)
+keywords.extend(lightActions.keys())
 
 def isFlag(arg):
 	return arg.startswith("-") or arg in keywords
