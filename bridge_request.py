@@ -13,8 +13,8 @@ def sendColourRequests(lightNumbers, colour):
 	for lightNumber in lightNumbers:
 		sendColorRequest(lightNumber, colour)
 		
-def sendColorRequest(lightNumber, colour):
-	colour["on"]=True
+def sendColorRequest(lightNumber, colour, on=True):
+	colour["on"]=on
 	sendRequest(lightNumber, colour)
 
 # lightNumber - integer key for light (3,4,5)

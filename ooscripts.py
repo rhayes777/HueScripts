@@ -57,6 +57,44 @@ class PoliceAction:
 		sendColourRequests(self.firstLights, firstColour)
 		sendColourRequests(self.secondLights, secondColour)
 		sleep(0.7)
-
-lightActions = {"police": PoliceAction()}
+		
+class FadeFromSideAction:
+	
+	def __init__(self, leftLight=5, middleLight=3, rightLight=4, pauseTime=0.2, jump=500):
+		self.lights = [leftLight, middleLight, rightLight]
+		self.colours = [colourForHueDegrees(0), colourForHueDegrees(180), colourForHueDegrees(360)]
+		self.pauseTime = pauseTime
+		self.jump = jump
+		
+	def perform(self, t):
+		for n in range (0,3):
+			sendRequest(self.lights[n],self.colours[n])
+			self.colours[n]=colourForHue(self.colours[n]["hue"] + self.jump*(1 - n))
+		self.colours[1]["hue"]
+		if self.colours[0]["hue"]>HUE_MAX:
+			self.colours[0]=colourForHueDegrees(0)
+		if self.colours[2]["hue"]<HUE_MIN:
+		    self.colours[2]=colourForHueDegrees(360)
+		sleep(self.pauseTime)
+		
+class SyncopatedFade:
+	def __init__(self, leftLight=5, middleLight=3, rightLight=4, pauseTime=0.2, jump=500):
+		self.lights = [leftLight, middleLight, rightLight]
+		self.colours = [colourForHueDegrees(0), colourForHueDegrees(120), colourForHueDegrees(240)]
+		self.pauseTime = pauseTime
+		self.jump = jump
+		
+	def perform(self, t):
+		for n in range (0,3):
+			sendRequest(self.lights[n],self.colours[n])
+			self.colours[n]=colourForHue(self.colours[n]["hue"] + self.jump)
+			if self.colours[n]["hue"]>HUE_MAX:
+				self.colours[n]=colourForHueDegrees(0)
+		
+		sleep(self.pauseTime)
+		
+		
+		
+			
+lightActions = {"police": PoliceAction(), "fade": FadeFromSideAction(), "sync": SyncopatedFade()}
 	
