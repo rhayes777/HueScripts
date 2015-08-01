@@ -26,7 +26,7 @@ if len(flagPairs)==0:
 	printKeywords()
 
 for flagPair in flagPairs:
-	flag = flagPair["flag"].lower()
+	flag = flagPair["flag"]
 	args = flagPair["args"]
 	
 	if flag == "on":

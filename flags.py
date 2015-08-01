@@ -13,14 +13,15 @@ keywords.extend(simpleCommands)
 keywords.extend(lightActions.keys())
 
 def isFlag(arg):
-	return arg.startswith("-") or arg.lower() in keywords
+	return arg.startswith("-") or arg in keywords
 
 def getFlags():
 	cmdargs = eval(str(sys.argv))
 	
 	flagPair={}
 	flagPairs=[]
-	for arg in cmdargs:	
+	for arg in cmdargs:
+		arg = arg.lower()
 		if isFlag(arg):
 			flagPair={"flag":arg,
 				  "args":[]}
