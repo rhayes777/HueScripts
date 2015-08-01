@@ -71,7 +71,6 @@ class FadeFromSideAction:
 		for n in [0,2]:
 			sendRequest(self.lights[n],self.colours[n])
 			self.colours[n]=colourForHue(self.colours[n]["hue"] + self.jump*(1 - n))
-		self.colours[1]["hue"]
 		if self.colours[0]["hue"]>HUE_MAX:
 			self.colours[0]=colourForHueDegrees(0)
 		if self.colours[2]["hue"]<HUE_MIN:
@@ -96,22 +95,22 @@ class SyncopatedFade:
 		
 class BounceFade(FadeFromSideAction):
 	def __init__(self, leftLight=5, middleLight=3, rightLight=4, pauseTime=0.2, jump=500):
-		FadeFromSideAction.__init__(self, leftLight, middleLight, rightLight, pauseTime, jump)
+		self.fadeFromSideAction = FadeFromSideAction(leftLight, middleLight, rightLight, pauseTime, jump)
 		self.jump = jump
 		self.middleLight = middleLight
 		self.middleColour = colourForHueDegrees(0)
-		self.bounceNumber = 0
+		self.directionCoefficient = 1
 		
 	def perform(self, t):
 		sendRequest(self.middleLight,self.middleColour)
-		self.middleColour=colourForHue(self.middleColour["hue"] + pow(-1,self.bounceNumber)*self.jump)
+		self.middleColour=colourForHue(self.middleColour["hue"] + self.directionCoefficient*self.jump)
 		if self.middleColour["hue"]>HUE_MAX:
 			self.middleColour=colourForHueDegrees(360)
-			self.bounceNumber+=1
+			self.directionCoefficient=-1
 		if self.middleColour["hue"]<HUE_MIN:
 		    self.middleColour=colourForHueDegrees(0)
-		    self.bounceNumber+=1
-		super(BounceFade,self).perform(t)
+		    self.directionCoefficient=1
+		self.fadeFromSideAction.perform(t)
 			
 class SinFade:
 	def __init__(self, lightNumbers=[3,4,5]):
