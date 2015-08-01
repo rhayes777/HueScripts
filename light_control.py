@@ -8,6 +8,7 @@ import colours
 import scripts
 from bridge_request import *
 import ooscripts
+import signal_setup
 
 def printKeywords():
 	for keyword in keywords:
