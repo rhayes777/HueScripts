@@ -27,7 +27,8 @@ def sendRequest(lightNumber,data,on=True):
 		print key + " = " + str(data[key]) + " "
 	headers = {'Content-type': 'application/json'}
 	r = requests.put("http://192.168.1.64/api/1fd93c561b633f071344f0ba3de5301b/lights/"+str(lightNumber)+"/state", data=json.dumps(data), headers=headers)
-# 	print r.content
+	if not 200<=r.status_code<300:
+		print r.content
 	
 def sendRequests(lightNumbers,data,on=True):
 	for lightNumber in lightNumbers:

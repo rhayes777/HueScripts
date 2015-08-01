@@ -7,6 +7,7 @@ from ooscripts import lightActions
 
 simpleCommands = ["on","off","switch", "colour"]
 keywords = ["status","random","script","circle","ccircle","strobe","fire","disco","police","help"]
+lightNames = ["window", "tv", "sofa"]
 simpleCommands.extend(colourDict.keys())
 keywords.extend(simpleCommands)
 keywords.extend(lightActions.keys())
@@ -25,6 +26,8 @@ def getFlags():
 				  "args":[]}
 			flagPairs.append(flagPair)	
 		elif "args" in flagPair:
+			if arg in lightNames:
+				arg = lightNames.index(arg)+3
 			flagPair["args"].append(arg)
 			
 	return flagPairs

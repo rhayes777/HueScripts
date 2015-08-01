@@ -30,6 +30,10 @@ for flagPair in flagPairs:
 	
 	if flag == "on":
 		requestjson["on"]=True
+	if flag in [3,4,5]:
+		if len(lights)==3:
+			lights=[]
+		lights.append(flag)
 	elif flag == "off":
 		requestjson["on"]=False
 	elif flag == "-b":
