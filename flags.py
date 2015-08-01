@@ -6,7 +6,7 @@ from colours import colourDict
 from ooscripts import lightActions
 
 simpleCommands = ["on","off","switch", "colour"]
-keywords = ["status","random","script","circle","ccircle","strobe","fire","disco","police","help"]
+keywords = ["status","random","circle","ccircle","strobe","fire","disco","police","help"]
 lightNames = ["window", "tv", "sofa"]
 simpleCommands.extend(colourDict.keys())
 keywords.extend(simpleCommands)
