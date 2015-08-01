@@ -3,7 +3,6 @@ import json
 def loadConfig():
 	with open("config.json", 'r') as f:
 		jsonContents = loadContents(f)
-		print jsonContents
 		return jsonContents["ip"], jsonContents["username"]
 
 def saveConfig(ip, username):
