@@ -2,8 +2,12 @@
 
 import requests
 import json
+import config_file
 
 isLogging = False
+
+ip, username = config_file.loadConfig()
+lightsUrl = "http://"+ip+"/api/"+username+"/lights/"
 
 def log(message):
 	if isLogging:
@@ -26,7 +30,7 @@ def sendRequest(lightNumber,data,on=True):
 	for key in data.keys():
 		print key + " = " + str(data[key]) + " "
 	headers = {'Content-type': 'application/json'}
-	r = requests.put("http://192.168.1.64/api/1fd93c561b633f071344f0ba3de5301b/lights/"+str(lightNumber)+"/state", data=json.dumps(data), headers=headers)
+	r = requests.put(lightsUrl+str(lightNumber)+"/state", data=json.dumps(data), headers=headers)
 	if not 200<=r.status_code<300:
 		print r.content
 	
@@ -35,7 +39,7 @@ def sendRequests(lightNumbers,data,on=True):
 		sendRequest(lightNumber,data, on)
 
 def getLights():
-	r = requests.get("http://192.168.1.64/api/1fd93c561b633f071344f0ba3de5301b/lights/")
+	r = requests.get(lightsUrl)
 	return r.content
 	
 def getLightNumbers():
