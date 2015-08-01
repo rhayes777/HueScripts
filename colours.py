@@ -34,6 +34,11 @@ def getHue(name):
 def randomColourInRange(min, max):
 	return colourForHue(randint(min, max))
 	
+def isOverHueMax(colour):
+	return colour["hue"]>HUE_MAX
+	
+def isUnderHueMin(colour):
+	return colour["hue"]<HUE_MIN
 
 	
 
