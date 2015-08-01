@@ -53,8 +53,6 @@ for flagPair in flagPairs:
 			sendColorRequest(light, colours.randomColour())
 	elif flag == "colour":
 		requestjson.update(colours.getColour(args[0]))
-	elif flag == "script":
-		scripts.playPremadeScript(args[0])
 	elif flag == "circle":
 		scripts.playCircle()
 	elif flag == "ccircle":
