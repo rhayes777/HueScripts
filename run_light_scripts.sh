@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-lights="python /Users/alexbrown/Zakk/HueScripts/light_control.py"
+source path_finder.sh
 
 function l {
     for arg     # "in $@" is implied!

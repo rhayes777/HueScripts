@@ -1,6 +1,6 @@
 #!/bin/bash
+source path_finder.py
 
-lights='python /Users/alexbrown/Zakk/HueScripts/light_control.py'
 
 $lights --on
 

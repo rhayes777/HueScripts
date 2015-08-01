@@ -1,6 +1,6 @@
 #!/bin/bash
 
-lights='python /Users/alexbrown/Zakk/HueScripts/light_control.py'
+source path_finder.py
 
 $lights --off
 

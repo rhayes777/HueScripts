@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source path_finder.sh
 
 USAGE="Usage: $0 arg1 arg2 arg3 ... argN"
 
-lights="python $DIR/light_control.py"
 
 if [ "$#" == "0" ]; then
     echo $USAGE
