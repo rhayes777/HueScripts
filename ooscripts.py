@@ -1,6 +1,7 @@
 from colours import *
 from bridge_request import *
 from time import sleep
+from math import *
 
 def getRandomLightsAndColours():
 	lightNumbers = bridge_request.getLightNumbers()
@@ -67,7 +68,7 @@ class FadeFromSideAction:
 		self.jump = jump
 		
 	def perform(self, t):
-		for n in range (0,3):
+		for n in [0,2]:
 			sendRequest(self.lights[n],self.colours[n])
 			self.colours[n]=colourForHue(self.colours[n]["hue"] + self.jump*(1 - n))
 		self.colours[1]["hue"]
@@ -93,8 +94,32 @@ class SyncopatedFade:
 		
 		sleep(self.pauseTime)
 		
+class BounceFade(FadeFromSideAction):
+	def __init__(self, leftLight=5, middleLight=3, rightLight=4, pauseTime=0.2, jump=500):
+		FadeFromSideAction.__init__(self, leftLight, middleLight, rightLight, pauseTime, jump)
+		self.jump = jump
+		self.middleLight = middleLight
+		self.middleColour = colourForHueDegrees(0)
+		self.bounceNumber = 0
+		
+	def perform(self, t):
+		sendRequest(self.middleLight,self.middleColour)
+		self.middleColour=colourForHue(self.middleColour["hue"] + pow(-1,self.bounceNumber)*self.jump)
+		if self.middleColour["hue"]>HUE_MAX:
+			self.middleColour=colourForHueDegrees(360)
+			self.bounceNumber+=1
+		if self.middleColour["hue"]<HUE_MIN:
+		    self.middleColour=colourForHueDegrees(0)
+		    self.bounceNumber+=1
+		super(BounceFade,self).perform(t)
+			
+class SinFade:
+	def __init__(self, lightNumbers=[3,4,5]):
+		self.lightNumbers = lightNumbers
+# 		self.colourList=[colourFor]
+		
 		
 		
 			
-lightActions = {"police": PoliceAction(), "fade": FadeFromSideAction(), "sync": SyncopatedFade()}
+lightActions = {"police": PoliceAction(), "fade": FadeFromSideAction(), "sync": SyncopatedFade(), "bounce":BounceFade()}
 	
