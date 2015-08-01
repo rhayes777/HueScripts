@@ -9,6 +9,7 @@ import scripts
 from bridge_request import *
 import ooscripts
 import signal_setup
+import config_file
 
 def printKeywords():
 	for keyword in keywords:
@@ -76,6 +77,11 @@ for flagPair in flagPairs:
 			ooscripts.playScriptForNames(list(set(ooscripts.lightActions).intersection(singleFlags)))
 	elif flag in colours.colourDict:
 		requestjson = colours.getColour(flag)
+	elif flag == "save":
+		config_file.addState(getStatus(args))
+	elif flag == "load":
+		for status in config_file.loadStates()[args[0]]:
+			print status
 	if flag in simpleCommands and len(args)!=0:
 		lights=args
 	
