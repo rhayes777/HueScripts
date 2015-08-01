@@ -2,10 +2,6 @@
 
 lights="python /Users/alexbrown/Zakk/HueScripts/light_control.py"
 
-echo Testing... Lights off
-$lights off && sleep 1
-
-### 
 function l {
     for arg     # "in $@" is implied!
     do
@@ -19,8 +15,8 @@ function l {
 ################### ENTER COMMANDS BELOW ###################
 
 echo Start script
-l madness bounce     &
-sleep 10
+l madness bounce      &
+sleep 5
 l police strobe       &
 
 #l red orange
