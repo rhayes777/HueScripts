@@ -9,6 +9,10 @@ import scripts
 from bridge_request import *
 import ooscripts
 
+def printKeywords():
+	for keyword in keywords:
+			print keyword
+
 flagPairs = getFlags()
 singleFlags = []
 for flagPair in flagPairs:
@@ -17,12 +21,19 @@ lights = [3,4,5]
 requestjson={}
 simpleCommands.extend(colours.colourDict.keys())
 
+if len(flagPairs)==0:
+	printKeywords()
+
 for flagPair in flagPairs:
 	flag = flagPair["flag"]
 	args = flagPair["args"]
 	
 	if flag == "on":
 		requestjson["on"]=True
+	if flag in [3,4,5]:
+		if len(lights)==3:
+			lights=[]
+		lights.append(flag)
 	elif flag == "off":
 		requestjson["on"]=False
 	elif flag == "-b":
@@ -46,8 +57,6 @@ for flagPair in flagPairs:
 			sendColorRequest(light, colours.randomColour())
 	elif flag == "colour":
 		requestjson.update(colours.getColour(args[0]))
-	elif flag == "script":
-		scripts.playPremadeScript(args[0])
 	elif flag == "circle":
 		scripts.playCircle()
 	elif flag == "ccircle":
@@ -61,8 +70,7 @@ for flagPair in flagPairs:
 # 	elif flag == "police":
 # 		scripts.playPolice()
 	elif flag == "help":
-		for keyword in keywords:
-			print keyword
+		printKeywords()
 	elif flag in ooscripts.lightActions:
 			ooscripts.playScriptForNames(list(set(ooscripts.lightActions).intersection(singleFlags)))
 	elif flag in colours.colourDict:

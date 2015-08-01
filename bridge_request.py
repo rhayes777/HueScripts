@@ -13,20 +13,22 @@ def sendColourRequests(lightNumbers, colour):
 	for lightNumber in lightNumbers:
 		sendColorRequest(lightNumber, colour)
 		
-def sendColorRequest(lightNumber, colour):
-	colour["on"]=True
+def sendColorRequest(lightNumber, colour, on=True):
+	colour["on"]=on
 	sendRequest(lightNumber, colour)
 
 # lightNumber - integer key for light (3,4,5)
 # data = anyof{"on":True,"bri":255,"sat":255,"hue":65000 or something like that } 
 def sendRequest(lightNumber,data,on=True):
-	data["on"]=on
+	if not "on" in data:
+		data["on"]=on
 	print "light " + str(lightNumber) + ": "
 	for key in data.keys():
 		print key + " = " + str(data[key]) + " "
 	headers = {'Content-type': 'application/json'}
 	r = requests.put("http://192.168.1.64/api/1fd93c561b633f071344f0ba3de5301b/lights/"+str(lightNumber)+"/state", data=json.dumps(data), headers=headers)
-# 	print r.content
+	if not 200<=r.status_code<300:
+		print r.content
 	
 def sendRequests(lightNumbers,data,on=True):
 	for lightNumber in lightNumbers:
@@ -47,7 +49,7 @@ def turnOn(lightNumbers=[]):
 def turnOff(lightNumbers=[]):
 	if not lightNumbers:
 		lightNumbers = getLightNumbers()
-	sendRequests(lightNumbers,{"on":False})
+	sendRequests(lightNumbers,{},on=False)
 	
 def setOn(isOn, lightNumbers=[]):
 	if not lightNumbers:
