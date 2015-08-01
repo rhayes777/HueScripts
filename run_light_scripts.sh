@@ -3,21 +3,28 @@
 lights="python /Users/alexbrown/Zakk/HueScripts/light_control.py"
 
 echo Testing... Lights off
-$lights off
+$lights off && sleep 1
 
 ### 
 function l {
-    echo "Running ONE with $2" $
-    $lights $1
-    sleep 1
-    echo "Running TWO with $1" $
-    $lights $2
-    sleep 1
+    for arg     # "in $@" is implied!
+    do
+        echo "Running lights $arg" $
+        $lights $arg
+        sleep 1
+    done
 }
 
+
 ################### ENTER COMMANDS BELOW ###################
-echo Running 
-l red orange
-l yellow green
-l turquoise blue
+
+echo Start script
+l madness bounce     &
+sleep 10
+l police strobe       &
+
+#l red orange
+#l yellow green
+#l turquoise blue
+echo End script
 
