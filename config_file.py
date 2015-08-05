@@ -3,7 +3,8 @@ import json
 def addState(name, state):
 	with open("config.json", 'w+') as f:
 		jsonContents = loadContents(f)
-		jsonContents[name].append(state)
+		print jsonContents
+		jsonContents[name]=state
 		f.write(json.dumps(jsonContents))
 		
 def loadStates():

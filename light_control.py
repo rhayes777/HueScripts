@@ -10,6 +10,8 @@ from bridge_request import *
 import ooscripts
 import signal_setup
 import config_file
+import trackpad
+import fingers
 
 def printKeywords():
 	for keyword in keywords:
@@ -30,6 +32,8 @@ for flagPair in flagPairs:
 	flag = flagPair["flag"]
 	args = flagPair["args"]
 	
+	if flag == "fingers":
+		fingers.listen()
 	if flag == "on":
 		requestjson["on"]=True
 	if flag in [3,4,5]:
@@ -78,7 +82,7 @@ for flagPair in flagPairs:
 	elif flag in colours.colourDict:
 		requestjson = colours.getColour(flag)
 	elif flag == "save":
-		config_file.addState(getStatus(args))
+		config_file.addState(args[0], getStatus(args))
 	elif flag == "load":
 		for status in config_file.loadStates()[args[0]]:
 			print status
