@@ -121,8 +121,19 @@ class SinFade:
 		self.lightNumbers = lightNumbers
 # 		self.colourList=[colourFor]
 		
+class Water:
+	def __init__(self, lightNumbers=[3,4,5]):
+		self.lightNumbers = lightNumbers
+		self.min = getColour("turquoise")["hue"]
+		self.max = getColour("blue")["hue"]
+		print self.min
+		print self.max
 		
+	def perform(self, t):
+		for light in self.lightNumbers:
+			sendRequest(light, randomColourInRange(self.min, self.max))
+		sleep(0.5)	
 		
 			
-lightActions = {"police": PoliceAction(), "fade": FadeFromSideAction(), "sync": SyncopatedFade(), "bounce":BounceFade()}
+lightActions = {"police": PoliceAction(), "fade": FadeFromSideAction(), "sync": SyncopatedFade(), "bounce":BounceFade(), "water": Water()}
 	
