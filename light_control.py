@@ -60,7 +60,7 @@ for flagPair in flagPairs:
 		if len(args)!=0:
 			lights=args
 		for light in lights:
-			sendColorRequest(light, colours.randomColour())
+			sendColorRequest(light, colours.randomFullColour())
 	elif flag == "colour":
 		requestjson.update(colours.getColour(args[0]))
 	elif flag == "circle":

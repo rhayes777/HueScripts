@@ -16,6 +16,9 @@ def colourForRGB(red, green, blue):
 
 def randomColour():
 	return colourForHBS(randint(0,HUE_MAX), randint(0,BRI_MAX), randint(0,SAT_MAX))
+	
+def randomFullColour():
+	return colourForHBS(randint(0,HUE_MAX), BRI_MAX, SAT_MAX)
 
 def colourForHue(hue):
 	return colourForHBS(hue, 255, 255)
