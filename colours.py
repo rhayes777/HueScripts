@@ -19,6 +19,9 @@ def randomColour():
 	
 def randomFullColour():
 	return colourForHBS(randint(0,HUE_MAX), BRI_MAX, SAT_MAX)
+	
+def whiteColour():
+	return colourForHBS(0, 255, 0)
 
 def colourForHue(hue):
 	return colourForHBS(hue, 255, 255)
@@ -26,7 +29,7 @@ def colourForHue(hue):
 def colourForHueDegrees(hueDegrees):
 	return colourForHue(HUE_MAX*hueDegrees/360)
 	
-colourDict = {"red":colourForHueDegrees(0),"orange":colourForHueDegrees(40),"yellow":colourForHueDegrees(80),"sky":colourForHueDegrees(200),"purple":colourForHueDegrees(280),"pink":colourForHueDegrees(300), "green":colourForHueDegrees(130), "blue":colourForHueDegrees(240),"turquoise":colourForHueDegrees(180),"red2":colourForHueDegrees(360)}
+colourDict = {"red":colourForHueDegrees(0),"orange":colourForHueDegrees(40),"yellow":colourForHueDegrees(80),"sky":colourForHueDegrees(200),"purple":colourForHueDegrees(280),"pink":colourForHueDegrees(300), "green":colourForHueDegrees(130), "blue":colourForHueDegrees(240),"turquoise":colourForHueDegrees(180),"red2":colourForHueDegrees(360), "light": whiteColour()}
 	
 def getColour(name):
 	return colourDict[name]
