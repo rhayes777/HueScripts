@@ -12,6 +12,7 @@ def getRandomLightsAndColours():
 
 def getCurrentLightsAndColours():
 	statusDict = getStatus()
+	print statusDict
 	lightNumbers = statusDict.keys()
 	colourList = []
 	for lightNumber in lightNumbers:
@@ -57,6 +58,19 @@ class PoliceAction:
 		secondColour = getColour("blue") if isFirstRed else getColour("red") 
 		sendColourRequests(self.firstLights, firstColour)
 		sendColourRequests(self.secondLights, secondColour)
+		sleep(0.7)
+		
+		
+class HalloweenAction:
+	
+	def __init__(self, lights = [3,4,5]):
+		self.lights = lights
+		self.colourList = [getColour("green"),getColour("orange"),getColour("purple")]
+			
+	def perform(self, t):
+		for n in range(0, len(self.lights)):
+			sendRequest(self.lights[n], self.colourList[(n + t) % 3])
+					
 		sleep(0.7)
 		
 class FadeFromSideAction:
@@ -135,5 +149,5 @@ class Water:
 		sleep(0.5)	
 		
 			
-lightActions = {"police": PoliceAction(), "fade": FadeFromSideAction(), "sync": SyncopatedFade(), "bounce":BounceFade(), "water": Water()}
+lightActions = {"police": PoliceAction(), "fade": FadeFromSideAction(), "sync": SyncopatedFade(), "bounce":BounceFade(), "water": Water(), "halloween": HalloweenAction()}
 	

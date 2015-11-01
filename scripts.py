@@ -75,7 +75,7 @@ def playPolice():
 def policeLightsAction(t):
 	isFirstRed = t % 2 == 0
 	firstColour = colours.getColour("red") if isFirstRed else colours.getColour("blue")
-	secondColour = colours.getColour("blue") if isFirstRed else colours.getColour("red") 
+	secondColour = colours.getColour("blue") if isFirstRed else colours.getColour("red")
 	bridge_request.sendColourRequests([3, 4], firstColour)
 	bridge_request.sendColourRequests([5], secondColour)
 
