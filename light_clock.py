@@ -26,4 +26,4 @@ def set_lights_by_time():
 if __name__ == "__main__":
     while True:
         set_lights_by_time()
-        sleep(0.5)
+        sleep(0.9)
