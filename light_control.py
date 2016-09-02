@@ -21,7 +21,7 @@ flagPairs = getFlags()
 singleFlags = []
 for flagPair in flagPairs:
     singleFlags.append(flagPair["flag"])
-lights = [3,4,5]
+lights = [3, 4, 5]
 requestjson={}
 simpleCommands.extend(colours.colourDict.keys())
 
