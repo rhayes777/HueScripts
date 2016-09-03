@@ -41,8 +41,7 @@ weather_colors = \
         ]
 
 
-def set_lights_by_weather():
-
+def set_lights_by_weather_for_key_and_time_delta(key, time_delta_into_future):
     ip = urlopen('http://ip.42.pl/raw').read()
 
     url = 'https://freegeoip.net/json/{}'.format(ip)
@@ -52,11 +51,12 @@ def set_lights_by_weather():
     lat = location_json["latitude"]
     lng = location_json["longitude"]
 
-    weather_json = json.loads(urlopen("https://api.forecast.io/forecast/2beeada32fb06ea94f0790895259d23c/{},{}".format(lat, lng)).read())
+    weather_json = json.loads(
+        urlopen("https://api.forecast.io/forecast/2beeada32fb06ea94f0790895259d23c/{},{}".format(lat, lng)).read())
 
-    daily_forecasts = weather_json["daily"]["data"]
+    daily_forecasts = weather_json[key]["data"]
 
-    tomorrow = (datetime.now() + timedelta(days=1)).date()
+    tomorrow = (datetime.now() + time_delta_into_future).date()
 
     for day_forecast in daily_forecasts:
         if (datetime.utcfromtimestamp(day_forecast["time"])).date() == tomorrow:
@@ -83,6 +83,9 @@ def set_lights_by_weather():
             sendColorRequest(lights[2], precip_color)
 
 
+def set_lights_by_weather_day():
+    set_lights_by_weather_for_key_and_time_delta("daily", timedelta(days=1))
+
 
 if __name__ == "__main__":
-    set_lights_by_weather()
+    set_lights_by_weather_day()
