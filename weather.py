@@ -43,7 +43,6 @@ weather_colors = \
 
 def set_lights_by_weather():
 
-    # ip = socket.gethostbyname(socket.gethostname())
     ip = urlopen('http://ip.42.pl/raw').read()
 
     url = 'https://freegeoip.net/json/{}'.format(ip)
@@ -83,13 +82,6 @@ def set_lights_by_weather():
             sendColorRequest(lights[1], icon_color)
             sendColorRequest(lights[2], precip_color)
 
-            print "precip_brightness = {}".format(precip_brightness)
-            print "temp_color_degrees = {}".format(temp_color_degrees)
-            print "icon_color = {}".format(icon_color)
-            print temp_color
-            print  precip_color
-
-    # datetime.utcfromtimestamp()
 
 
 if __name__ == "__main__":
