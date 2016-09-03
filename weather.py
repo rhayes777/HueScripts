@@ -5,6 +5,7 @@ from urllib2 import urlopen
 import colours
 from bridge_request import sendColorRequest
 from light_control import lights
+from math import ceil
 
 
 CLEAR_DAY = "clear-day"
@@ -28,8 +29,8 @@ class WeatherColor:
 
 weather_colors = \
     [
-        WeatherColor(CLEAR_DAY, "sky"),
-        WeatherColor(CLEAR_NIGHT, "sky"),
+        WeatherColor(CLEAR_DAY, "yellow"),
+        WeatherColor(CLEAR_NIGHT, "yellow"),
         WeatherColor(RAIN, "blue"),
         WeatherColor(SNOW, "blue"),
         WeatherColor(SLEET, "blue"),
@@ -64,8 +65,6 @@ def set_lights_by_weather():
             precip_intensity = day_forecast["precipIntensity"]
             icon = day_forecast["icon"]
 
-            print temperature
-
             temp_color_degrees = int((100 - temperature) * 2.4)
 
             if temp_color_degrees > 240:
@@ -73,7 +72,7 @@ def set_lights_by_weather():
             elif temp_color_degrees < 0:
                 temp_color_degrees = 0
 
-            precip_brightness = int(255 * precip_intensity / 75)
+            precip_brightness = int(ceil(255 * float(precip_intensity) / 75))
 
             temp_color = colours.colourForHueDegrees(temp_color_degrees)
             icon_color = filter(lambda weather_color: weather_color.icon == icon, weather_colors)[0].color
