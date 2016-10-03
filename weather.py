@@ -83,9 +83,14 @@ def set_lights_by_weather_for_key_and_time_delta(key, time_delta_into_future):
             sendColorRequest(lights[2], precip_color)
 
 
-def set_lights_by_weather_day():
+def set_lights_for_next_day():
     set_lights_by_weather_for_key_and_time_delta("daily", timedelta(days=1))
 
 
+def set_lights_for_next_hour():
+    set_lights_by_weather_for_key_and_time_delta("hourly", timedelta(hours=1))
+
+
 if __name__ == "__main__":
-    set_lights_by_weather_day()
+    set_lights_for_next_day()
+    # set_lights_for_next_hour
